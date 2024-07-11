@@ -28,6 +28,7 @@ public class Prodotto {
     @Check(constraints = "quantita > 0")
     private Integer quantita;
     @ManyToMany
+    @JoinColumn(name = "categoria_id")
     private List<Categoria> categoria;
 
 }
