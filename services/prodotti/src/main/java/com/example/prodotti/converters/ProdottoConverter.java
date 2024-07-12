@@ -4,12 +4,15 @@ import com.example.prodotti.entities.Categoria;
 import com.example.prodotti.entities.Prodotto;
 import com.example.prodotti.requests.ProdottoRequest;
 import com.example.prodotti.responses.ProdottoResponse;
+import com.example.prodotti.services.CategoriaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 
 @Service
 public class ProdottoConverter {
+
+    @Autowired
+    private CategoriaService categoriaService;
 
     public ProdottoResponse mapToProdottoResponse(Prodotto prodotto) {
         return ProdottoResponse.builder()
@@ -31,7 +34,10 @@ public class ProdottoConverter {
                 .descrizione(prodottoRequest.getDescrizione())
                 .prezzo(prodottoRequest.getPrezzo())
                 .quantita(prodottoRequest.getQuantita())
-                .categoria(new ArrayList<>())
+                .categoria(prodottoRequest.getIdCategoria()
+                        .stream()
+                        .map(categoriaService::getCategoriaById)
+                        .toList())
                 .build();
     }
 }

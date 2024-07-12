@@ -6,10 +6,10 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CategoriaRequest {
+@Builder
+public class ProdottoPurchaseRequest {
 
-    private String nome;
-    private String descrizione;
-
+    private Long idProdotto;
+    private Integer quantita;
 
 }
