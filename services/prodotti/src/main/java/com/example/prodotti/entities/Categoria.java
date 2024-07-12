@@ -20,7 +20,5 @@ public class Categoria {
     private String nome;
     @Column
     private String descrizione;
-    @ManyToMany
-    private List<Prodotto> prodotti;
 
 }

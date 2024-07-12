@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EntityNotFoundException extends Exception {
+public class EntityNotFoundException extends RuntimeException {
 
     private Long entityId;
     private String entityName;

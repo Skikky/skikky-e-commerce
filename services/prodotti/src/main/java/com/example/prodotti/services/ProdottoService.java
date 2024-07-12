@@ -1,9 +1,9 @@
 package com.example.prodotti.services;
 
 import com.example.prodotti.converters.ProdottoConverter;
-import com.example.prodotti.entities.Categoria;
 import com.example.prodotti.entities.Prodotto;
 import com.example.prodotti.exceptions.EntityNotFoundException;
+import com.example.prodotti.exceptions.InputErratoException;
 import com.example.prodotti.repositories.CategoriaRepository;
 import com.example.prodotti.repositories.ProdottoRepository;
 import com.example.prodotti.requests.ProdottoRequest;
@@ -21,59 +21,56 @@ public class ProdottoService {
     private ProdottoRepository prodottoRepository;
     @Autowired
     private CategoriaRepository categoriaRepository;
+    @Autowired
+    private ProdottoConverter prodottoConverter;
 
-    public Prodotto getProdottoById(Long id) throws EntityNotFoundException {
+    public Prodotto getProdottoById(Long id) {
         return prodottoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id,"Prodotto"));
     }
 
-    public ProdottoResponse getProdottoResponseById(Long id) throws EntityNotFoundException {
+    public ProdottoResponse getProdottoResponseById(Long id) {
         Prodotto prodotto = prodottoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id,"Prodotto"));
-        return ProdottoConverter.mapToProdottoResponse(prodotto);
+        return prodottoConverter.mapToProdottoResponse(prodotto);
     }
 
     public List<ProdottoResponse> getAllProdotti() {
         List<Prodotto> prodotti = prodottoRepository.findAll();
         return prodotti.stream()
-                .map(ProdottoConverter::mapToProdottoResponse)
+                .map(prodottoConverter::mapToProdottoResponse)
                 .collect(Collectors.toList());
     }
 
-    public ProdottoResponse createProdotto(ProdottoRequest prodottoRequest) throws EntityNotFoundException{
-        List<Categoria> categorie = prodottoRequest.getIdCategoria().stream()
-                .map(categoriaId -> categoriaRepository.getReferenceById(categoriaId))
-                .toList();
+    public ProdottoResponse createProdotto(ProdottoRequest prodottoRequest) {
+        //TODO crea un metodo inputValidation()
+        if (prodottoRequest.getPrezzo() <= 0) {
+            throw new InputErratoException("il prezzo non può essere minore o uguale a 0");
+        }
+        if (prodottoRequest.getQuantita() <= 0) {
+            throw new InputErratoException("la quantità non può essere minore o uguale a 0");
+        }
 
-        Prodotto prodotto = Prodotto.builder()
-                .nome(prodottoRequest.getNome())
-                .descrizione(prodottoRequest.getDescrizione())
-                .prezzo(prodottoRequest.getPrezzo())
-                .quantita(prodottoRequest.getQuantita())
-                .categoria(categorie)
-                .build();
+        Prodotto prodotto = prodottoConverter.mapToProdotto(prodottoRequest);
         prodottoRepository.saveAndFlush(prodotto);
-        return ProdottoConverter.mapToProdottoResponse(prodotto);
+
+        return prodottoConverter.mapToProdottoResponse(prodotto);
     }
 
-    public ProdottoResponse updateProdotto(Long id, ProdottoRequest prodottoRequest) throws EntityNotFoundException {
+    public ProdottoResponse updateProdotto(Long id, ProdottoRequest prodottoRequest) {
+        //TODO crea un metodo inputValidation()
+        if (prodottoRequest.getPrezzo() <= 0) {
+            throw new InputErratoException("il prezzo non può essere minore o uguale a 0");
+        }
+        if (prodottoRequest.getQuantita() <= 0) {
+            throw new InputErratoException("la quantità non può essere minore o uguale a 0");
+        }
         getProdottoById(id);
-
-        List<Categoria> categorie = prodottoRequest.getIdCategoria().stream()
-                .map(categoriaId -> categoriaRepository.getReferenceById(categoriaId))
-                .toList();
-
-        Prodotto prodotto = Prodotto.builder()
-                .id(id)
-                .nome(prodottoRequest.getNome())
-                .descrizione(prodottoRequest.getDescrizione())
-                .prezzo(prodottoRequest.getPrezzo())
-                .quantita(prodottoRequest.getQuantita())
-                .categoria(categorie)
-                .build();
+        Prodotto prodotto = prodottoConverter.mapToProdotto(prodottoRequest);
+        prodotto.setId(id);
         prodottoRepository.saveAndFlush(prodotto);
-        return ProdottoConverter.mapToProdottoResponse(prodotto);
+        return prodottoConverter.mapToProdottoResponse(prodotto);
     }
 
-    public void deleteProdotto(Long id) throws EntityNotFoundException {
+    public void deleteProdotto(Long id) {
         getProdottoById(id);
         prodottoRepository.deleteById(id);
     }
