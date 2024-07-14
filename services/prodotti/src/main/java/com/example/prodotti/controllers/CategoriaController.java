@@ -1,6 +1,7 @@
 package com.example.prodotti.controllers;
 
 import com.example.prodotti.entities.Categoria;
+import com.example.prodotti.handler.GenericResponse;
 import com.example.prodotti.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,5 +35,11 @@ public class CategoriaController {
     @PutMapping("/update/{id}")
     public ResponseEntity<Categoria> createCategoria(@PathVariable Long id, @RequestBody Categoria categoria) {
         return new ResponseEntity<>(categoriaService.updateCategoria(id, categoria), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<GenericResponse> deleteCategoria(@PathVariable Long id) {
+        categoriaService.deleteCategoria(id);
+        return new ResponseEntity<>(new GenericResponse("Categoria con id: "+id+" cancellata con successo"), HttpStatus.OK);
     }
 }
