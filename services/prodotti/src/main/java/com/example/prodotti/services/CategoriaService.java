@@ -27,9 +27,13 @@ public class CategoriaService {
     }
 
     public Categoria updateCategoria(Long id, Categoria newCategoria) {
-        Categoria oldCategoria = getCategoriaById(id);
-        oldCategoria.setNome(newCategoria.getNome());
-        oldCategoria.setDescrizione(newCategoria.getDescrizione());
+        getCategoriaById(id);
+        Categoria oldCategoria = Categoria.builder()
+                .id(id)
+                .nome(newCategoria.getNome())
+                .descrizione(newCategoria.getDescrizione())
+                .build();
+
         return categoriaRepository.saveAndFlush(oldCategoria);
     }
 

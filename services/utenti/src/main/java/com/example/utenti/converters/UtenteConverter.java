@@ -8,7 +8,6 @@ import com.example.utenti.services.IndirizzoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,8 +32,6 @@ public class UtenteConverter {
     }
 
     public Utente mapToUtente(UtenteRequest utenteRequest) {
-        List<Indirizzo> indirizzi = indirizzoService.getAllIndirizziById(utenteRequest.getIndirizziId());
-
         return Utente.builder()
                 .nome(utenteRequest.getNome())
                 .cognome(utenteRequest.getCognome())
@@ -42,7 +39,6 @@ public class UtenteConverter {
                 .email(utenteRequest.getEmail())
                 .password(utenteRequest.getPassword())
                 .codiceFiscale(utenteRequest.getCodiceFiscale())
-                .indirizzi(indirizzi)
                 .build();
     }
 }

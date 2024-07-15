@@ -1,5 +1,6 @@
 package com.example.utenti.controllers;
 
+import com.example.utenti.entities.Indirizzo;
 import com.example.utenti.handler.GenericResponse;
 import com.example.utenti.requests.UtenteRequest;
 import com.example.utenti.responses.UtenteResponse;
@@ -33,6 +34,25 @@ public class UtenteController {
         return new ResponseEntity<>(utenteService.createUtente(utenteRequest), HttpStatus.CREATED);
     }
 
+    @PostMapping("/add-indirizzo-utente/{id}")
+    public ResponseEntity<UtenteResponse> addIndirizzoToUtente(@PathVariable Long id, @RequestBody Indirizzo indirizzo) {
+        return new ResponseEntity<>(utenteService.addIndirizzoToUtente(id, indirizzo), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update-indirizzo-utente/{id}")
+    public ResponseEntity<UtenteResponse> updateIndirizzoUtente(@PathVariable Long id, @RequestBody Indirizzo indirizzo) {
+        return new ResponseEntity<>(utenteService.updateIndirizzoUtente(id, indirizzo), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/delete-indirizzo-utente")
+    public ResponseEntity<UtenteResponse> deleteIndirizzoUtente(@RequestParam Long utenteId, @RequestParam Long indirizzoId) {
+        return new ResponseEntity<>(utenteService.deleteIndirizzoUtente(utenteId, indirizzoId), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/get-indirizzi-utente{id}")
+    public ResponseEntity<List<Indirizzo>> getIndirizziUtente(@PathVariable Long id) {
+        return new ResponseEntity<>(utenteService.getIndirizziByUtenteId(id), HttpStatus.FOUND);
+    }
     @PutMapping("/update/{id}")
     public ResponseEntity<UtenteResponse> updateUtente(@PathVariable Long id, @RequestBody UtenteRequest utenteRequest) {
         return new ResponseEntity<>(utenteService.updateUtente(id, utenteRequest), HttpStatus.CREATED);

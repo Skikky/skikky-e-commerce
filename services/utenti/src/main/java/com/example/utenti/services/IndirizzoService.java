@@ -14,10 +14,6 @@ public class IndirizzoService {
     @Autowired
     private IndirizzoRepository indirizzoRepository;
 
-    public List<Indirizzo> getAllIndirizziById(List<Long> ids) {
-        return indirizzoRepository.findAllById(ids);
-    }
-
     public List<Indirizzo> getAllIndirizzi() {
         return indirizzoRepository.findAll();
     }

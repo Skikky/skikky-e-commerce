@@ -3,7 +3,6 @@ package com.example.utenti.requests;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,6 +16,5 @@ public class UtenteRequest {
     private String email;
     private String password;
     private String codiceFiscale;
-    private List<Long> indirizziId;
 
 }

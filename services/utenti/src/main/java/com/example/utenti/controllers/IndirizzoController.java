@@ -22,17 +22,6 @@ public class IndirizzoController {
         return new ResponseEntity<>(indirizzoService.getAllIndirizzi(), HttpStatus.FOUND);
     }
 
-    @GetMapping("/all-by-ids")
-    public ResponseEntity<List<Indirizzo>> getAllIndirizziById(@RequestParam List<Long> ids) {
-        List<Indirizzo> indirizzi = indirizzoService.getAllIndirizziById(ids);
-
-        if (indirizzi.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(indirizzi);
-        }
-    }
-
     @GetMapping("/get/{id}")
     public ResponseEntity<Indirizzo> getIndirizzoById(@PathVariable Long id) {
         return new ResponseEntity<>(indirizzoService.getIndirizzoById(id), HttpStatus.FOUND);
