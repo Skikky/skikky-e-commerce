@@ -1,8 +1,7 @@
+server:
+  port: 8052
+
 spring:
-  application:
-    name: utenti-service
-  config:
-    import: optional:configserver:http://localhost:8888
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/utenti
@@ -21,6 +20,3 @@ spring:
     baseline-version: 0
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
-
-server:
-  port: 8082
