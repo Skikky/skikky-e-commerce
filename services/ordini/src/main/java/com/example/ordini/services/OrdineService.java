@@ -1,5 +1,6 @@
 package com.example.ordini.services;
 
+import com.example.ordini.converters.OrdineConverter;
 import com.example.ordini.repositories.OrdineRepository;
 import com.example.ordini.responses.OrdineResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +13,13 @@ public class OrdineService {
 
     @Autowired
     private OrdineRepository ordineRepository;
+    @Autowired
+    private OrdineConverter ordineConverter;
 
-    public OrdineResponse getOrdineById(Long id) {
-    }
-
-    public List<OrdineResponse> getOrdiniCarrelloById(Long idCarrello) {
-        ordineRepository.getOrdiniByCarrelloId(idCarrello);
-
+    public List<OrdineResponse> getOrdiniByCarrelloId(Long idCarrello) {
+        return ordineRepository.findOrdiniByCarrelloId(idCarrello)
+                .stream()
+                .map(ordineConverter::mapToOrdineResponse)
+                .toList();
     }
 }

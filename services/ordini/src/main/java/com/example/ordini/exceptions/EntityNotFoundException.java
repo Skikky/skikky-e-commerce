@@ -1,5 +1,8 @@
-package com.example.utenti.exceptions;
+package com.example.ordini.exceptions;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class EntityNotFoundException extends RuntimeException {
 
     private Long entityId;

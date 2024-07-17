@@ -21,7 +21,6 @@ public class OrdineController {
 
     @GetMapping("/get/{idCarrello}")
     public ResponseEntity<List<OrdineResponse>> getOrdiniByCarrelloId(@PathVariable Long idCarrello) {
-        return new ResponseEntity<>(ordineService.getOrdiniCarrelloById(idCarrello), HttpStatus.FOUND);
+        return new ResponseEntity<>(ordineService.getOrdiniByCarrelloId(idCarrello), HttpStatus.FOUND);
     }
-
 }
