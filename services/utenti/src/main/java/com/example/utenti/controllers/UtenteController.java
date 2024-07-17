@@ -39,11 +39,6 @@ public class UtenteController {
         return new ResponseEntity<>(utenteService.addIndirizzoToUtente(id, indirizzo), HttpStatus.CREATED);
     }
 
-    @PutMapping("/update-indirizzo-utente/{id}")
-    public ResponseEntity<UtenteResponse> updateIndirizzoUtente(@PathVariable Long id, @RequestBody Indirizzo indirizzo) {
-        return new ResponseEntity<>(utenteService.updateIndirizzoUtente(id, indirizzo), HttpStatus.CREATED);
-    }
-
     @DeleteMapping("/delete-indirizzo-utente")
     public ResponseEntity<UtenteResponse> deleteIndirizzoUtente(@RequestParam Long utenteId, @RequestParam Long indirizzoId) {
         return new ResponseEntity<>(utenteService.deleteIndirizzoUtente(utenteId, indirizzoId), HttpStatus.CREATED);

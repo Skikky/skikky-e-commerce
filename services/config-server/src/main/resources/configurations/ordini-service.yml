@@ -23,9 +23,9 @@ spring:
     password: ${spring.datasource.password}
 
 server:
-  port: 8052
+  port: 8054
 
 application:    #vedi come si fa un gateway
   config:
-    utenti-url: http://localhost:8051/api/v1/utente
-    prodotti-url: http://localhost:8050/api/v1/prodotto
+    utenti-url: http://localhost:8053/api/v1/utente
+    prodotti-url: http://localhost:8052/api/v1/prodotto

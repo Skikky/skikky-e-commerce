@@ -2,6 +2,7 @@ package com.example.ordini.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Check;
 
 @Entity
 @NoArgsConstructor
@@ -16,9 +17,10 @@ public class Ordine {
     private Long id;
     @ManyToOne
     private Carrello carrello;
-    @Column
+    @Column(nullable = false)
     private Long idProdotto;
-    @Column
+    @Column(nullable = false)
+    @Check(constraints = "quantita >= 0")
     private Integer quantita;
 
 }

@@ -77,24 +77,6 @@ public class UtenteService {
         return utenteConverter.mapToUtenteResponse(utente);
     }
 
-    public UtenteResponse updateIndirizzoUtente(Long utenteId, Indirizzo indirizzo) {
-        Utente utente = getUtenteById(utenteId);
-
-        Optional<Indirizzo> optionalIndirizzo = utente.getIndirizzi().stream()
-                .filter(ind -> ind.getId().equals(indirizzo.getId()))
-                .findFirst();
-
-        if (optionalIndirizzo.isEmpty()) {
-            throw new EntityNotFoundException(indirizzo.getId(), "Indirizzo");
-        }
-
-        Indirizzo indirizzoToUpdate = optionalIndirizzo.get();
-        indirizzoService.updateIndirizzo(indirizzoToUpdate.getId(), indirizzoToUpdate);
-
-        utenteRepository.saveAndFlush(utente);
-        return utenteConverter.mapToUtenteResponse(utente);
-    }
-
     public UtenteResponse deleteIndirizzoUtente(Long utenteId, Long indirizzoId) {
         Utente utente = getUtenteById(utenteId);
 
@@ -116,7 +98,6 @@ public class UtenteService {
 
     public List<Indirizzo> getIndirizziByUtenteId(Long utenteId) {
         Utente utente = getUtenteById(utenteId);
-
         return utente.getIndirizzi();
     }
 
