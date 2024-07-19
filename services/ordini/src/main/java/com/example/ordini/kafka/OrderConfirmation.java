@@ -1,4 +1,4 @@
-package com.example.ordini.requests;
+package com.example.ordini.kafka;
 
 import com.example.ordini.prodotto.ProdottoPurchaseRequest;
 import lombok.*;
@@ -10,10 +10,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CarrelloRequest {
+public class OrderConfirmation {
 
-    private Long idUtente;
+    private Long idOrdine;      //carrello
     private Double totalAmount;
-    private List<ProdottoPurchaseRequest> prodottoPurchaseRequests;
+    private Long idUtente;
+    private List<ProdottoPurchaseRequest> prodotti;
 
 }

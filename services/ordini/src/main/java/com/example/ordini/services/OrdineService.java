@@ -1,6 +1,7 @@
 package com.example.ordini.services;
 
 import com.example.ordini.converters.OrdineConverter;
+import com.example.ordini.entities.Ordine;
 import com.example.ordini.repositories.OrdineRepository;
 import com.example.ordini.responses.OrdineResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,9 @@ public class OrdineService {
                 .stream()
                 .map(ordineConverter::mapToOrdineResponse)
                 .toList();
+    }
+
+    public Ordine saveOrdine(Ordine ordine) {
+        return ordineRepository.saveAndFlush(ordine);
     }
 }
