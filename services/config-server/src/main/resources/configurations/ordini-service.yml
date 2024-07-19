@@ -22,6 +22,14 @@ spring:
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
 
+  kafka:
+    producer:
+      bootstrap-server: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: orderConfirmation:com.example.ordini.kafka.OrderProducer
+
 server:
   port: 8054
 
@@ -29,3 +37,4 @@ application:    #vedi come si fa un gateway
   config:
     utenti-url: http://localhost:8053/api/v1/utente
     prodotti-url: http://localhost:8052/api/v1/prodotto
+    payment-url: http://localhost:8055/api/v1/payment
