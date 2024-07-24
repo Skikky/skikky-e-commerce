@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 public class CarrelloConverter {
 
     public CarrelloResponse mapToCarrelloResponse(Carrello carrello) {
-        inputValidation(carrello);
         return CarrelloResponse.builder()
                 .id(carrello.getId())
                 .idUtente(carrello.getIdUtente())
@@ -21,6 +20,8 @@ public class CarrelloConverter {
     }
 
     public Carrello mapToCarrello(CarrelloRequest carrelloRequest) {
+        inputValidation(carrelloRequest);
+
         return Carrello.builder()
                 .idUtente(carrelloRequest.getIdUtente())
                 .totalAmount(carrelloRequest.getTotalAmount())
@@ -29,8 +30,8 @@ public class CarrelloConverter {
                 .build();
     }
 
-    //questo l'ho aggiunto solo per spostarlo in futuro, qui è un controllo inutile
-    private void inputValidation(Carrello carrello) {
+    //TODO sposta questo metodo dove servirà in futuro
+    private void inputValidation(CarrelloRequest carrello) {
         if (carrello.getTotalAmount() < 0) {
             throw new InputErratoException("il totale non può essere minore di 0");
         }

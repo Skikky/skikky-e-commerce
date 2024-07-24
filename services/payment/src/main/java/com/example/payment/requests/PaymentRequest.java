@@ -8,4 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class PaymentRequest {
+
+    private Double totalAmount;
+    private Long idCarrello;
+    private String metodoDiPagamento;
+
 }
